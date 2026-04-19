@@ -1,1 +1,38 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>پروکسی ساده</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>پروکسی ساده</h1>
+        <form id="proxy-form">
+            <input type="text" id="url-input"
+                placeholder="آدرس سایت مورد نظر را وارد کنید (مثلا google.com)">
+            <button type="submit">برو</button>
+        </form>
+        <div id="content-frame">
+            <iframe id="proxy-iframe" width="100%" height="600px"
+                frameborder="0"></iframe>
+        </div>
 
+        <script>
+        const form = document.getElementById('proxy-form');
+        const urlInput = document.getElementById('url-input');
+        const proxyIframe = document.getElementById('proxy-iframe');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const targetUrl = urlInput.value;
+            if (targetUrl) {
+                // آدرس تابع Serverless ما در Vercel به این شکل خواهد بود: /api/proxy?url=...
+                // ما باید آدرس کامل را به iframe بدهیم
+                const proxyUrl = `/api/proxy?url=${encodeURIComponent(targetUrl)}`;
+                proxyIframe.src = proxyUrl;
+            }
+        });
+    </script>
+    </body>
+</html>
